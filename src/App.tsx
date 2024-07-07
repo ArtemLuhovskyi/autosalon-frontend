@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Route, Routes} from 'react-router-dom'
+import HomePage from './pages/HomePage';
+import CarPage from './pages/CarPage';
+import PricePage from './pages/PricePage';
+import BuyPage from './pages/BuyPage';
+import ConnectionPage from './pages/ConnectionPage';
+import TestDrivePage from './pages/TestDrivePage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/car/:id" element={<CarPage />} />
+      <Route path="/price" element={<PricePage />} />
+      <Route path="/buy" element={<BuyPage />} />
+      <Route path="/connection" element={<ConnectionPage />} />
+      <Route path="/testdrive" element={<TestDrivePage />} />
+    </Routes>
+  )
 }
 
 export default App;
