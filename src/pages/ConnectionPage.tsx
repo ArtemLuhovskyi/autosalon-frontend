@@ -99,7 +99,7 @@ export default function ConnectionPage() {
                                     onChange={handleChange}></textarea>
                             </div>
                             <div className="block block-btn">
-                                <button type="submit">Надіслати форму</button>
+                                <button type="submit" className='button-form'>Надіслати форму</button>
                             </div>
                         </div>
                     </div>

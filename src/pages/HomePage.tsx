@@ -1,15 +1,26 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Main from '../components/Main';
-import {  useEffect, useRef  } from 'react';
+import {  useEffect, useRef, useState  } from 'react';
 import useFixed from '../hooks/useFixed';
+import { get } from 'http';
 
 export default function HomePage() {
+
   const fixed = useFixed();
   
   useEffect(() => {
       document.title = `Autosalon`;
+      getFirstResponse()
   }, []);
+
+  const getFirstResponse = async () => { 
+    const response = await fetch(`${process.env.REACT_APP_DEV_URL}/getData`);
+    const data = await response.json();
+    console.log("getFirstResponse: ", data);
+    return data;
+  };
+
 
   const refs:any = 
     {
@@ -55,7 +66,7 @@ export default function HomePage() {
   return (
     <>
     <Header scrollToElements={scrollToElements} fixed={fixed} />
-    <Main ref={refs} />
+    <Main ref={refs}  />
     <Footer />
     </>
   )
