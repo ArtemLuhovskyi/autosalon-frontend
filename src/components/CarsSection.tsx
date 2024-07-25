@@ -117,7 +117,7 @@ export default function CarsSection() {
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>
-                                    <img src={item.img} alt="Image" />
+                                    <img className='img-admin' src={item.img} alt="Image" />
                                 </td>
                                 <td>{item.title}</td>
                                 <td>{item.price}</td>
