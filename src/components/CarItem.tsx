@@ -1,7 +1,7 @@
 import {dataCars, ICar} from '../data';
 import { Link, useLocation  } from 'react-router-dom';
 export default function CarItem(props: ICar) {
-    const {id, img, title, decription, price} = props
+    const {id, img, title, description, price} = props
     const href = `/car/${id}`
     const location = useLocation()
     const isPricePage = location.pathname === '/price'
@@ -29,7 +29,7 @@ export default function CarItem(props: ICar) {
                 <h4 className="our-auto__title">{title}</h4>
             </Link>}
             <div className="our-auto__text">
-                {isPricePage ? priceCarString : decription}
+                {isPricePage ? priceCarString : description}
             </div>
             <div className="our-auto__text">
                 {isPricePage ? <Link to={href} className="btn--blue">Read more</Link> : null}

@@ -23,7 +23,7 @@
     padding-bottom: 60px;
     display: flex;
     color: #2a2e48;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .auto--left {
@@ -61,10 +61,11 @@
     display: flex;
     justify-content: center;
 }
-table {
-    width: 96%;
+.auto--table table {
+    width: 90%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
+    border: 1px solid;
 }
 th, td {
     padding: 7px;
@@ -88,9 +89,6 @@ th {
     text-align: left;
     font-weight: bold;
     background-color: #f9f9f9;
-}
-.auto--table table {
-    border: 1px solid;
 }
 
 .auto--info {

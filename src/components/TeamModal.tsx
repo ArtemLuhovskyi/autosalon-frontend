@@ -1,59 +1,57 @@
 import { useState } from 'react';
 import '../css/carModal.css'
-import { ICars } from '../interfaces/cars';
+import { ITeam } from '../interfaces/team';
 
-interface CarModalProps {
-  car: ICars | null;
+interface TeamModalProps {
+  team: ITeam | null;
   onClose: () => void;
-  getAllCars: () => void;
+  getAllTeam: () => void;
 }
 
-export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
-  const [img, setImg] = useState(car?.img || '');
-  const [title, setTitle] = useState(car?.title || '');
-  const [description, setDescription] = useState(car?.description || '');
-  const [price, setPrice] = useState(car?.price?.toString() || '');
+export default function TeamModal({ team, onClose, getAllTeam }: TeamModalProps) {
+  const [img, setImg] = useState(team?.img || '');
+  const [title, setTitle] = useState(team?.title || '');
+  const [description, setDescription] = useState(team?.description || '');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newCar = {
-        id: car?.id,
-      img,
-      title,
-      description,
-      price: parseFloat(price),
+    const newTeam = {
+        id: team?.id,
+        img,
+        title,
+        description
     };
 
-    const url = car
-      ? `${process.env.REACT_APP_DEV_URL}/updateCar`
-      : `${process.env.REACT_APP_DEV_URL}/addCar`;
+    const url = team
+      ? `${process.env.REACT_APP_DEV_URL}/updateTeam`
+      : `${process.env.REACT_APP_DEV_URL}/addTeam`;
 
-    const method = car ? 'PUT' : 'POST';
+    const method = team ? 'PUT' : 'POST';
 
     const response = await fetch(url, {
       method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newCar),
+      body: JSON.stringify(newTeam),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to submit car');
+      throw new Error('Failed to submit team');
     }
 
     const result = await response.json();
-    console.log('Car submitted successfully:', result);
+    console.log('team submitted successfully:', result);
 
-    getAllCars();
+    getAllTeam();
     onClose();
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>{car ? 'Edit Car' : 'Add Car'}</h2>
+        <h2>{team ? 'Edit team' : 'Add team'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="img">Image URL:</label>
@@ -85,19 +83,9 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
               required
             />
           </div>
-          <div className="input-group">
-            <label htmlFor="price">Price:</label>
-            <input
-              type="number"
-              id="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </div>
           <div className="modal-actions">
-            <button type="submit" className="action-btn">
-              {car ? 'Update' : 'Add'}
+            <button type="submit" className="action-btn" style={{backgroundColor: team ? '#faa60b' : '#1fc01f'}} >
+              {team ? 'Update' : 'Add'}
             </button>
             <button type="button" className="action-btn cancel-btn" onClick={onClose}>
               Cancel

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import '../css/table-cars-section.css';
 import { ICars } from '../interfaces/cars';
-import ModalCar from './ModalCar';
+import CarModal from './CarModal';
 
 export default function CarsSection() {
     const [cars, setCars] = useState<ICars[]>([]);
@@ -46,7 +46,12 @@ export default function CarsSection() {
         return result;
     };
 
-    const updateCar = async (id: number, title: string, description: string, price: number[],) => {
+    const updateCar = async (
+        id: number,
+        title: string,
+        description: string,
+        price: number[]
+    ) => {
         const params = {
             id,
             title,
@@ -63,43 +68,54 @@ export default function CarsSection() {
                 body: JSON.stringify(params),
             }
         );
-      }
+    };
 
-    const addCar = async (img:string, title: string, description: string, price: number[]) => {
-            const params = {
-              img,
-              title,
-              description,
-              price,
-            };
-            const response = await fetch(
-                `${process.env.REACT_APP_DEV_URL}/addCar`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(params),
-                }
-            );
-          }
+    const addCar = async (
+        img: string,
+        title: string,
+        description: string,
+        price: number[]
+    ) => {
+        const params = {
+            img,
+            title,
+            description,
+            price,
+        };
+        const response = await fetch(
+            `${process.env.REACT_APP_DEV_URL}/addCar`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(params),
+            }
+        );
+    };
 
     const handleOpenModal = (car: ICars | null) => {
-            setCurrentCar(car);
-            setIsModalOpen(true);
-          };
-        
+        setCurrentCar(car);
+        setIsModalOpen(true);
+    };
+
     const handleCloseModal = () => {
-            setIsModalOpen(false);
-            setCurrentCar(null);
-          };
+        setIsModalOpen(false);
+        setCurrentCar(null);
+    };
 
     return (
         <div className="cars-section">
-          <div className='add-car-block'>
-            <h2 className='add-cars-text'>Cars</h2>
-            <button className="action-btn add-cars-btn" onClick={() => handleOpenModal(null)}>add car</button>
-          </div>
+            <div className="add-car-block">
+                <h2 className="add-cars-text">Cars</h2>
+                <button
+                    className="action-btn add-cars-btn"
+                    onClick={() => handleOpenModal(null)}
+                    style={{ backgroundColor: '#1fc01f' }}
+                >
+                    + add car
+                </button>
+            </div>
             <div className="table-container">
                 <table>
                     <thead>
@@ -117,7 +133,11 @@ export default function CarsSection() {
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>
-                                    <img className='img-admin' src={item.img} alt="Image" />
+                                    <img
+                                        className="img-admin"
+                                        src={item.img}
+                                        alt="Image"
+                                    />
                                 </td>
                                 <td>{item.title}</td>
                                 <td>{item.price}</td>
@@ -125,23 +145,36 @@ export default function CarsSection() {
                                 <td>
                                     <button
                                         onClick={() => deleteCar(item.id)}
-                                        className="action-btn">
+                                        className="action-btn"
+                                        style={{ backgroundColor: '#f24444' }}
+                                    >
                                         delete
                                     </button>
-                                    <button onClick={() => handleOpenModal(item)} className="action-btn">edit</button>
+                                    <button
+                                        onClick={() => handleOpenModal(item)}
+                                        className="action-btn"
+                                        style={{ backgroundColor: '#faa60b' }}
+                                    >
+                                        edit
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                         {cars.length === 0 && (
-                          <tr>
-                              <td colSpan={6}>No cars found</td>
-                          </tr>)}
+                            <tr>
+                                <td colSpan={6}>No cars found</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
             {isModalOpen && (
-        <ModalCar car={currentCar} onClose={handleCloseModal} getAllCars={getAllCars} />
-      )}
+                <CarModal
+                    car={currentCar}
+                    onClose={handleCloseModal}
+                    getAllCars={getAllCars}
+                />
+            )}
         </div>
     );
 }
