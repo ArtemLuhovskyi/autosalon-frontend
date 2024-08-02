@@ -71,13 +71,11 @@ export default function CarsSection() {
     };
 
     const addCar = async (
-        img: string,
         title: string,
         description: string,
         price: number[]
     ) => {
         const params = {
-            img,
             title,
             description,
             price,
@@ -102,6 +100,17 @@ export default function CarsSection() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setCurrentCar(null);
+    };
+
+    const getImgCar = (item: ICars) => {
+        const url =  item.images.find(
+          (image) => image.img_type === 'main'
+      )?.img_url
+      if (url) {
+          return `${process.env.REACT_APP_DEV_URL}/${url}`;
+      } else {
+          return '';
+      }
     };
 
     return (
@@ -135,7 +144,7 @@ export default function CarsSection() {
                                 <td>
                                     <img
                                         className="img-admin"
-                                        src={item.img}
+                                        src={getImgCar(item)} 
                                         alt="Image"
                                     />
                                 </td>

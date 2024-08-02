@@ -133,7 +133,7 @@ export default function TeamSection() {
                                 <td>
                                     <img
                                         className="img-admin"
-                                        src={item.img}
+                                        src={process.env.REACT_APP_DEV_URL+item.img}
                                         alt="Image"
                                     />
                                 </td>

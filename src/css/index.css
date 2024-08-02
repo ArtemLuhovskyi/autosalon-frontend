@@ -85,7 +85,7 @@ h1 {
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-	
+	align-items: center;
 }
 
 .nav .active {

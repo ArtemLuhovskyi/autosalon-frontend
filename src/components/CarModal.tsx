@@ -9,21 +9,32 @@ interface CarModalProps {
 }
 
 export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
-  const [img, setImg] = useState(car?.img || '');
   const [title, setTitle] = useState(car?.title || '');
   const [description, setDescription] = useState(car?.description || '');
   const [price, setPrice] = useState(car?.price?.toString() || '');
+  const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newCar = {
-        id: car?.id,
-        img,
-        title,
-        description,
-        price: parseFloat(price),
-    };
+    // const newCar = {
+    //     id: car?.id,
+    //     img,
+    //     title,
+    //     description,
+    //     price: parseFloat(price),
+    // };
+
+    const formData = new FormData();
+    if (file) {
+      formData.append('file', file);
+    }
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('price', price);
+    if (car) {
+      formData.append('id', car.id.toString());
+    }
 
     const url = car
       ? `${process.env.REACT_APP_DEV_URL}/updateCar`
@@ -33,10 +44,7 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
 
     const response = await fetch(url, {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newCar),
+      body: formData,
     });
 
     if (!response.ok) {
@@ -55,14 +63,13 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
       <div className="modal-content">
         <h2>{car ? 'Edit Car' : 'Add Car'}</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="img">Image URL:</label>
+        <div className="input-group">
+            <label htmlFor="file">Image:</label>
             <input
-              type="text"
-              id="img"
-              value={img}
-              onChange={(e) => setImg(e.target.value)}
-              required
+              type="file"
+              id="file"
+              onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+              required={!car}
             />
           </div>
           <div className="input-group">

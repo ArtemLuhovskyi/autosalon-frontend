@@ -22,7 +22,7 @@ export const dataCars: ICar[] = [
         img: '/img/BMW/main.jpg',
         title: "BMW 7 Series",
         description: "Розкішний і комфортний седан для вимогливих водіїв.",
-        price: [68493, 104110],
+        price: [68493],
         additional_info: {
             hero_image:'/img/BMW/bg.jpg',
             images_gallery: [

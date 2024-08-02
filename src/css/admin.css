@@ -6,21 +6,12 @@
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
+.h1--admin {
+    margin-top: 80px;
+}
 .tic {
     text-align: center;
 }
-
-.header-admin {
-    padding: 20px 0;
-    max-width: 350px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-}
-
 
 .input-group {
     margin-bottom: 15px;
@@ -37,7 +28,6 @@
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
 
 .error {
     color: red;

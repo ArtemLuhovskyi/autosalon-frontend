@@ -34,7 +34,11 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #e0e0e0;
+    background-color: #afc9ef;
+}
+
+tbody tr:nth-child(even):hover {
+    background-color: #ebdede;
 }
 
 .img-admin {
