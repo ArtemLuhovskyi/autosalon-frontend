@@ -46,52 +46,6 @@ export default function CarsSection() {
         return result;
     };
 
-    const updateCar = async (
-        id: number,
-        title: string,
-        description: string,
-        price: number[]
-    ) => {
-        const params = {
-            id,
-            title,
-            description,
-            price,
-        };
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/updateCar`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(params),
-            }
-        );
-    };
-
-    const addCar = async (
-        title: string,
-        description: string,
-        price: number[]
-    ) => {
-        const params = {
-            title,
-            description,
-            price,
-        };
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/addCar`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(params),
-            }
-        );
-    };
-
     const handleOpenModal = (car: ICars | null) => {
         setCurrentCar(car);
         setIsModalOpen(true);

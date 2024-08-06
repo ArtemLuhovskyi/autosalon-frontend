@@ -6,7 +6,7 @@ export default function TeamItem(props: ITeam) {
         <div className="team__item">
             <img
                 className="team__photo"
-                src={process.env.REACT_APP_DEV_URL + img}
+                src={`${process.env.REACT_APP_DEV_URL}/${img}`}
                 alt=""
             />
             <div className="team__name">{title}</div>

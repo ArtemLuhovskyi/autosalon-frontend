@@ -46,52 +46,7 @@ export default function TeamSection() {
         return result;
     };
 
-    const updateTeam = async (
-        id: number,
-        img: string,
-        title: string,
-        description: string
-    ) => {
-        const params = {
-            id,
-            img,
-            title,
-            description,
-        };
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/updateTeam`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(params),
-            }
-        );
-    };
 
-    const addTeam = async (
-        id: string,
-        img: string,
-        title: string,
-        description: string
-    ) => {
-        const params = {
-            img,
-            title,
-            description,
-        };
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/addTeam`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(params),
-            }
-        );
-    };
 
     const handleOpenModal = (team: ITeam | null) => {
         setCurrentTeam(team);
@@ -101,6 +56,15 @@ export default function TeamSection() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setCurrentTeam(null);
+    };
+
+    const getImgTeam = (item: ITeam) => {
+        const url =  item.img 
+      if (url) {
+          return `${process.env.REACT_APP_DEV_URL}/${url}`;
+      } else {
+          return '';
+      }
     };
 
     return (
@@ -133,7 +97,7 @@ export default function TeamSection() {
                                 <td>
                                     <img
                                         className="img-admin"
-                                        src={process.env.REACT_APP_DEV_URL+item.img}
+                                        src={getImgTeam(item)}
                                         alt="Image"
                                     />
                                 </td>

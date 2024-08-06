@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/carModal.css'
 import { ICars } from '../interfaces/cars';
+import ImagePreview from './ImagePreview';
 
 interface CarModalProps {
   car: ICars | null;
@@ -13,17 +14,19 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
   const [description, setDescription] = useState(car?.description || '');
   const [price, setPrice] = useState(car?.price?.toString() || '');
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (car?.images && car.images.length > 0) {
+      const mainImage = car.images.find((image) => image.img_type === 'main');
+      if (mainImage) {
+        setFileName(mainImage.img_url.split('/').pop() || null);
+      }
+    }
+  }, [car]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    // const newCar = {
-    //     id: car?.id,
-    //     img,
-    //     title,
-    //     description,
-    //     price: parseFloat(price),
-    // };
 
     const formData = new FormData();
     if (file) {
@@ -65,13 +68,27 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
         <form onSubmit={handleSubmit}>
         <div className="input-group">
             <label htmlFor="file">Image:</label>
+            <label className="file-label" htmlFor="file">
+            {file ? file.name : fileName || 'Choose Car'}
+            </label>
             <input
               type="file"
               id="file"
-              onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+              onChange={(e) => {
+                setFile(e.target.files ? e.target.files[0] : null);
+                setFileName(e.target.files ? e.target.files[0].name : null);
+              }}
               required={!car}
             />
           </div>
+          <ImagePreview
+            file={file}
+            handleFileRemove={() => {
+              setFile(null);
+              setFileName(null);
+            }}
+            imageUrl={fileName ? `${process.env.REACT_APP_DEV_URL}/images/cars/${car?.id}/${fileName}` : undefined}
+          />
           <div className="input-group">
             <label htmlFor="title">Title:</label>
             <input
@@ -103,10 +120,10 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
             />
           </div>
           <div className="modal-actions">
-            <button type="submit" className="action-btn" style={{backgroundColor: car ? '#faa60b' : '#1fc01f'}} >
+            <button type="submit" className="action-btn-modal" style={{backgroundColor: car ? '#faa60b' : '#1fc01f'}} >
               {car ? 'Update' : 'Add'}
             </button>
-            <button type="button" className="action-btn cancel-btn" onClick={onClose}>
+            <button type="button" className="action-btn-modal cancel-btn" onClick={onClose}>
               Cancel
             </button>
           </div>
