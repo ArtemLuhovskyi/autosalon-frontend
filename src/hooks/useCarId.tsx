@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { dataCars, ICar } from '../data';
+import { dataCars } from '../data';
 
 const useCarId = () => {
     const params = useParams();

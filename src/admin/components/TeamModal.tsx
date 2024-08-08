@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import '../css/carModal.css'
-import { ITeam } from '../interfaces/team';
+import '../../css/carModal.css'
+import { ITeam } from '../../interfaces/team';
 import ImagePreview from './ImagePreview';
+
 
 interface TeamModalProps {
   team: ITeam | null;

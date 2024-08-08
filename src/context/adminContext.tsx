@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface AdminContextProps {
   username: string;
@@ -28,7 +29,7 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [user, setUser] = useState<string | null>(null);
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
+  const navigate = useNavigate();
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -55,16 +56,28 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       if (isLogin) {
         setUser(username);
         setIsAuthenticated(true);
+        localStorage.setItem('user', username);
+        localStorage.setItem('isAuthenticated', 'true');
       } else {
         setIsLogin(true);
       }
       setUsername('');
       setPassword('');
       setError(null);
+    
     } catch (error: any) {
       setError(error.response?.data?.message || 'An error occurred');
     }
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const storedIsAuthenticated = localStorage.getItem('isAuthenticated');
+    if (storedUser && storedIsAuthenticated === 'true') {
+      setUser(storedUser);
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -75,6 +88,9 @@ export const AdminProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
+    localStorage.removeItem('user');
+    localStorage.removeItem('isAuthenticated');
+    navigate('/admin');
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '../css/admin.css';
-import Button from './Button/Button';
-import { useAdmin } from '../context/adminContext';
+import '../../css/admin.css';
+import { useAdmin } from '../../context/adminContext';
+import Button from '../../components/Button/Button';
 
 export default function Login() {
     const {

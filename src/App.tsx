@@ -5,8 +5,10 @@ import PricePage from './pages/PricePage';
 import BuyPage from './pages/BuyPage';
 import ConnectionPage from './pages/ConnectionPage';
 import TestDrivePage from './pages/TestDrivePage';
-import AdminPage from './pages/AdminPage';
 import { AdminProvider } from './context/adminContext';
+import AdminPage from './admin/pages/AdminPage';
+import NewCarPage from './admin/pages/NewCarPage';
+import EditCarPage from './admin/pages/EditCarPage';
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                 <Route path="/connection" element={<ConnectionPage />} />
                 <Route path="/testdrive" element={<TestDrivePage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/car/new" element={<NewCarPage />} />
+                <Route path="/admin/car/:id" element={<EditCarPage />} />
             </Routes>
         </AdminProvider>
     );

@@ -1,82 +1,38 @@
 import { useEffect, useState } from 'react';
-import '../css/table-cars-section.css';
-import TeamModal from './TeamModal';
-import { ITeam } from '../interfaces/team';
+import '../../css/table-cars-section.css';
+import { ICars } from '../../interfaces/cars';
+import CarModal from './CarModal';
+import useCar from '../../hooks/useCar';
 
-export default function TeamSection() {
-    const [team, setTeam] = useState<ITeam[]>([]);
+export default function CarsSection() {
+    const {getAllCars, deleteCar, car, cars, error, isLoading, getImgCar} = useCar();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [currentTeam, setCurrentTeam] = useState<ITeam | null>(null);
+    const [currentCar, setCurrentCar] = useState<ICars | null>(null);
 
     useEffect(() => {
-        getAllTeam();
+        getAllCars();
     }, []);
 
-    const getAllTeam = async () => {
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/getTeam`
-        );
-        const dataTeam = await response.json();
-        console.log('getAllTeam: ', dataTeam);
-        setTeam(dataTeam.data);
-        return dataTeam;
-    };
-
-    const deleteTeam = async (id: number) => {
-        const params = {
-            id,
-        };
-        const response = await fetch(
-            `${process.env.REACT_APP_DEV_URL}/deleteTeam`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(params),
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error('Failed to delete team');
-        }
-
-        const result = await response.json();
-        await getAllTeam();
-        return result;
-    };
-
-
-
-    const handleOpenModal = (team: ITeam | null) => {
-        setCurrentTeam(team);
+    const handleOpenModal = (car: ICars | null) => {
+        setCurrentCar(car);
         setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setCurrentTeam(null);
-    };
-
-    const getImgTeam = (item: ITeam) => {
-        const url =  item.img 
-      if (url) {
-          return `${process.env.REACT_APP_DEV_URL}/${url}`;
-      } else {
-          return '';
-      }
+        setCurrentCar(null);
     };
 
     return (
         <div className="cars-section">
             <div className="add-car-block">
-                <h2 className="add-cars-text">Team</h2>
+                <h2 className="add-cars-text">Cars</h2>
                 <button
                     className="action-btn add-cars-btn"
                     onClick={() => handleOpenModal(null)}
                     style={{ backgroundColor: '#1fc01f' }}
                 >
-                   + add team
+                    + add car
                 </button>
             </div>
             <div className="table-container">
@@ -86,26 +42,28 @@ export default function TeamSection() {
                             <th>ID</th>
                             <th>Image</th>
                             <th>Name</th>
+                            <th>Price</th>
                             <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {team.map((item: ITeam) => (
+                        {cars.map((item: ICars) => (
                             <tr key={item.id}>
                                 <td>{item.id}</td>
                                 <td>
                                     <img
                                         className="img-admin"
-                                        src={getImgTeam(item)}
+                                        src={getImgCar(item)}
                                         alt="Image"
                                     />
                                 </td>
                                 <td>{item.title}</td>
+                                <td>{item.price}</td>
                                 <td>{item.description}</td>
                                 <td>
                                     <button
-                                        onClick={() => deleteTeam(item.id)}
+                                        onClick={() => deleteCar(item.id)}
                                         className="action-btn"
                                         style={{ backgroundColor: '#f24444' }}
                                     >
@@ -121,19 +79,19 @@ export default function TeamSection() {
                                 </td>
                             </tr>
                         ))}
-                        {team.length === 0 && (
+                        {cars.length === 0 && (
                             <tr>
-                                <td colSpan={6}>No team found</td>
+                                <td colSpan={6}>No cars found</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
             {isModalOpen && (
-                <TeamModal
-                    team={currentTeam}
+                <CarModal
+                    car={currentCar}
                     onClose={handleCloseModal}
-                    getAllTeam={getAllTeam}
+                    getAllCars={getAllCars}
                 />
             )}
         </div>

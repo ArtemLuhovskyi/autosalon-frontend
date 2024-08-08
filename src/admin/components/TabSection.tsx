@@ -1,4 +1,4 @@
-import Button from "./Button/Button"
+import Button from "../../components/Button/Button";
 
 
 export default function TabsSection( { active, onChange }: { active: string, onChange: (current: string) => void } ) {

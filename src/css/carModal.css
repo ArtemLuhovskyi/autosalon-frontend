@@ -12,7 +12,7 @@
 }
 
 .modal-content {
-    background: #fff;
+    background: #acd8ff;
     padding: 20px;
     border-radius: 8px;
     width: 500px;
@@ -34,6 +34,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    
 }
 
 .input-group input[type='text'],
@@ -43,6 +44,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    background: #d2eaff;
 }
 
 .modal-actions {
@@ -64,6 +66,7 @@
 
 .input-group input[type='file'] {
     display: none;
+    
 }
 
 .file-label {
@@ -72,7 +75,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #fff;
+    background: #d2eaff;
     text-align: center;
     font-size: 13px;
 }

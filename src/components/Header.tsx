@@ -10,7 +10,7 @@ const Header = ({ scrollToElements, fixed }: any) => {
 
     const { user, logout, error} = useAdmin();
     const location = useLocation()
-    const isAdminPage = location.pathname === '/admin';
+    const isAdminPage = location.pathname.includes('/admin')
 
     return (
         <header className={fixed ? 'header fixed' : 'header '} id="header">
