@@ -62,3 +62,9 @@
     align-items: center;
     /* margin: 30px 0; */
 }
+
+.block-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
