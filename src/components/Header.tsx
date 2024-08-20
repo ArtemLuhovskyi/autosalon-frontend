@@ -22,7 +22,7 @@ const Header = ({ scrollToElements, fixed }: any) => {
                     <nav className={`nav ${isOpen ? 'show' : ''}`} id="nav">
                         {isAdminPage ? 
                             <>
-                            <div className='nav__link'> User: {user} </div>
+                            <div style={{fontSize: '15px', textTransform: 'none'}} className='nav__link'> User: {user} </div>
                             <div className='nav__link'><Button isActive={!error} onClick={logout}>Logout</Button></div>
                             </>
                          : <>

@@ -1,7 +1,6 @@
-import {dataCars, ICar} from '../data';
 import { ICars } from '../interfaces/cars';
 import CarItem from './CarItem';
-import React, { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 const Cars = forwardRef<HTMLDivElement>((props, ref) => {
     const [cars, setCars] = useState<ICars[]>([]);

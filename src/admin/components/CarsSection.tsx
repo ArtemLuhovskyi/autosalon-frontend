@@ -28,9 +28,8 @@ export default function CarsSection() {
             <div className="add-car-block">
                 <h2 className="add-cars-text">Cars</h2>
                 <button
-                    className="action-btn add-cars-btn"
+                    className="action-btn add-cars-btn btn--red"
                     onClick={() => handleOpenModal(null)}
-                    style={{ backgroundColor: '#1fc01f' }}
                 >
                     + add car
                 </button>
@@ -64,16 +63,14 @@ export default function CarsSection() {
                                 <td>
                                     <button
                                         onClick={() => deleteCar(item.id)}
-                                        className="action-btn"
-                                        style={{ backgroundColor: '#f24444' }}
-                                    >
+                                        className="action-btn cancel-btn"
+                                        >
                                         delete
                                     </button>
                                     <button
                                         onClick={() => handleOpenModal(item)}
-                                        className="action-btn"
-                                        style={{ backgroundColor: '#faa60b' }}
-                                    >
+                                        className="action-btn edit-btn"
+                                        >
                                         edit
                                     </button>
                                 </td>

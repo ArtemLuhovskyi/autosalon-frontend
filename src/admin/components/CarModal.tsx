@@ -43,7 +43,7 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
             method,
             body: formData,
         });
-
+        
         if (!response.ok) {
             throw new Error('Failed to submit car');
         }
@@ -76,18 +76,22 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
                     <div className="modal-actions">
                         <button
                             type="submit"
-                            className="action-btn-modal"
-                            style={{
-                                backgroundColor: car ? '#faa60b' : '#1fc01f',
-                            }}
+                            className={car ? 'action-btn-modal edit-btn' : 'action-btn-modal btn--red'}
                         >
                             {car ? 'Update' : 'Add'}
                         </button>
                         <Link
                             to={href}
                             style={{
-                                backgroundColor: 'rgb(107 107 107)',
+                                backgroundColor: 'rgb(169, 169, 169)', 
                                 textDecoration: 'none',
+                                transition: 'background-color 0.3s ease',
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgb(169, 169, 169)'; 
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = 'rgb(105, 105, 105)'; 
                             }}
                             className="action-btn-modal"
                         >

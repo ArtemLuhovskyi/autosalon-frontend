@@ -4,3 +4,8 @@ export interface IGallery {
     img_type: string;
     car_id: number;
 }
+
+export interface IGalleryImage {
+    file: File | null;
+    fileName: string | null;
+}

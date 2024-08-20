@@ -153,7 +153,7 @@ export default function TestDrivePage() {
                                     onChange={handleChange}></textarea>
                             </div>
                             <div className="block block-btn btn--test">
-                                <button type="submit" className='button-form'>Надіслати форму</button>
+                                <button type="submit" className='button-form btn--red'>Надіслати форму</button>
                             </div>
                         </div>
                     </div>

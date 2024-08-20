@@ -101,7 +101,7 @@
     color: #FFFFFF;
     background-color: #437fff;
     border-radius: 30px;
-    border: solid 1px #15a0ed;
+    border: 0;
     text-align: center;
     display: flex;
     align-items: center;

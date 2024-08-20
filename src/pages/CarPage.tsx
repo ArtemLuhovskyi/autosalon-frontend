@@ -8,12 +8,23 @@ import HeaderCar from "../components/HeaderCar";
 import useFixed from "../hooks/useFixed";
 import useCarId from "../hooks/useCarId";
 import { useEffect } from 'react';
+import useCar from '../hooks/useCar';
+import { useParams } from 'react-router-dom';
 
 
 export default function CarPage() {
     const fixed = useFixed();
     const car = useCarId();
-    
+
+    const { getCar} = useCar();
+    const params = useParams();
+    const id = params.id;
+    useEffect(() => {
+        if (id) {
+            getCar(id);
+        }
+    }, [id]);
+
     useEffect(() => {
         if (car) {
             document.title = `${car.title}`;
@@ -27,7 +38,7 @@ export default function CarPage() {
             <h1>{car?.title}</h1>
             <div className="auto">
                 <GalleryCar car={car} />
-                <CharacteristicsCar car={car} />
+                <CharacteristicsCar />
             </div>
         </div>
         <DescriptionsCar car={car} />

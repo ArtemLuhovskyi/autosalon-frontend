@@ -1,30 +1,13 @@
-import { useState } from 'react';
 import { ICars } from '../../interfaces/cars';
 import { AiFillDelete } from 'react-icons/ai';
-
+import { IAdditionalBlock } from '../../interfaces/additionalInfoCar';
 interface AdditionalInfoCar {
-    title: string;
-    setTitle: (title: string) => void;
-    description: string;
-    setDescription: (description: string) => void;
-    price: string;
-    setPrice: (price: string) => void;
+    blocks: IAdditionalBlock[];
+    setBlocks: (blocks: IAdditionalBlock[]) => void;
     car: ICars | null;
 }
 
-interface Block {
-    title: string;
-    characteristics: Characteristic[];
-}
-
-interface Characteristic {
-    name: string;
-    value: string;
-}
-
-export default function AdditionalInfoCar({ car }: AdditionalInfoCar) {
-    const [blocks, setBlocks] = useState<Block[]>([]);
-    console.log('blocks: ', blocks);
+export default function AdditionalInfoCar({ blocks, setBlocks, car }: AdditionalInfoCar) {
 
     const handleAddBlock = () => {
         setBlocks([
@@ -179,7 +162,7 @@ export default function AdditionalInfoCar({ car }: AdditionalInfoCar) {
                     <button
                         onClick={() => handleAddCharacteristics(indexBlock)}
                         style={{ padding: '5px 10px', marginTop: '10px' }}
-                        className="action-btn"
+                        className="action-btn btn--red"
                     >
                         Add a characteristic
                     </button>
@@ -188,7 +171,7 @@ export default function AdditionalInfoCar({ car }: AdditionalInfoCar) {
             <button
                 onClick={handleAddBlock}
                 style={{ padding: '5px 10px', marginTop: '10px' }}
-                className="action-btn"
+                className="action-btn btn--red"
             >
                 Add block
             </button>

@@ -176,16 +176,17 @@ h1 {
 	text-decoration: none;
 	text-align: center;
 
-	transition: background 0.8s ;
+	transition: all .8s;
 }
 
 .btn--red {
-	background-color: rgb(147 88 201);
+	background: linear-gradient(90deg, rgb(0, 145, 255) 0%, #70c8ff 100%);
+	transition: all .8s;
 }
 
 .btn--red:hover {
-	background-color: rgb(182 40 255);
-	
+    background: linear-gradient(90deg, #7b76ff 0%, #5ec7ff 100%);
+	filter: hue-rotate(-50deg);
 }
 
 .btn--long {

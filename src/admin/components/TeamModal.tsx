@@ -106,7 +106,7 @@ export default function TeamModal({ team, onClose, getAllTeam }: TeamModalProps)
             />
           </div>
           <div className="modal-actions">
-            <button type="submit" className="action-btn-modal" style={{backgroundColor: team ? '#faa60b' : '#1fc01f'}} >
+            <button type="submit" className={team ? 'action-btn-modal edit-btn' : 'action-btn-modal btn--red'} >
               {team ? 'Update' : 'Add'}
             </button>
             <button type="button" className="action-btn-modal cancel-btn" onClick={onClose}>

@@ -42,7 +42,7 @@ export default function CarItem(props: ICars) {
                 {isPricePage ? priceCarString : description}
             </div>
             <div className="our-auto__text">
-                {isPricePage ? <Link to={href} className="btn--blue">Read more</Link> : null}
+                {isPricePage ? <Link to={href} className="btn--blue btn--red">Read more</Link> : null}
             </div>
         </div>
     )

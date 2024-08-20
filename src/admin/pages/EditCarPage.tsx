@@ -1,15 +1,8 @@
 import { useAdmin } from '../../context/adminContext';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useCarId from "../../hooks/useCarId";
 import GlobalAdminCar from "../components/GlobalAdminCar";
-import { ICars } from '../../interfaces/cars';
 import useCar from '../../hooks/useCar';
-import { get } from 'http';
-
-// interface EditCarPageProps {
-//     car: ICars | null;
-// }
 
 export default function EditCarPage() {
     const { isAuthenticated } = useAdmin();
