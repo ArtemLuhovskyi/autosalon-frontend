@@ -1,10 +1,10 @@
 import { Link, useLocation  } from 'react-router-dom';
 import { ICars } from '../interfaces/cars';
-import { IGallery } from '../interfaces/gallery';
+import { GalleryType, IGallery } from '../interfaces/gallery';
 
-export default function CarItem(props: ICars) {
+export default function CarItem(car: ICars) {
 
-    const {id, title, description, price, images} = props
+    const {id, title, description, price, images} = car
     const href = `/car/${id}`
     const location = useLocation()
     const isPricePage = location.pathname === '/price'
@@ -16,7 +16,7 @@ export default function CarItem(props: ICars) {
     }
     const getImgCar = (images: IGallery[]) => {
         const url =  images.find(
-          (image) => image.img_type === 'main'
+          (image) => image.img_type === GalleryType.main
       )?.img_url
       if (url) {
           return `${process.env.REACT_APP_DEV_URL}/${url}`;

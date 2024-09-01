@@ -17,7 +17,6 @@ export default function PricePage() {
             `${process.env.REACT_APP_DEV_URL}/getCars`
         );
         const dataCars = await response.json();
-        console.log('getAllCars: ', dataCars);
         setCars(dataCars.data);
         return dataCars;
     };

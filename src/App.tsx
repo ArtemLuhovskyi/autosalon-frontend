@@ -9,21 +9,24 @@ import { AdminProvider } from './context/adminContext';
 import AdminPage from './admin/pages/AdminPage';
 import NewCarPage from './admin/pages/NewCarPage';
 import EditCarPage from './admin/pages/EditCarPage';
+import { CarProvider } from './context/carContext';
 
 function App() {
     return (
         <AdminProvider>
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/car/:id" element={<CarPage />} />
-                <Route path="/price" element={<PricePage />} />
-                <Route path="/buy" element={<BuyPage />} />
-                <Route path="/connection" element={<ConnectionPage />} />
-                <Route path="/testdrive" element={<TestDrivePage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="/admin/car/new" element={<NewCarPage />} />
-                <Route path="/admin/car/:id" element={<EditCarPage />} />
-            </Routes>
+            <CarProvider>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/car/:id" element={<CarPage />} />
+                    <Route path="/price" element={<PricePage />} />
+                    <Route path="/buy" element={<BuyPage />} />
+                    <Route path="/connection" element={<ConnectionPage />} />
+                    <Route path="/testdrive" element={<TestDrivePage />} />
+                    <Route path="/admin" element={<AdminPage />} />
+                    <Route path="/admin/car/new" element={<NewCarPage />} />
+                    <Route path="/admin/car/:id" element={<EditCarPage />} />
+                </Routes>
+            </CarProvider>
         </AdminProvider>
     );
 }

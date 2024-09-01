@@ -17,7 +17,6 @@ export default function HomePage() {
   const getFirstResponse = async () => { 
     const response = await fetch(`${process.env.REACT_APP_DEV_URL}/getData`);
     const data = await response.json();
-    console.log("getFirstResponse: ", data);
     return data;
   };
 

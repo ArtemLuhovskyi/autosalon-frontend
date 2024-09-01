@@ -67,7 +67,6 @@ const useForm = () => {
             const cleanedFields = Object.fromEntries(
                 Object.entries(contactFields).filter(([_, value]) => value.trim() !== '')
             );
-            console.log(cleanedFields);
             setOrderSubmitted(true);
             setContactFields(initialFormState);
         }

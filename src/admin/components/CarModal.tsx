@@ -3,6 +3,7 @@ import '../../css/carModal.css';
 import { ICars } from '../../interfaces/cars';
 import { Link } from 'react-router-dom';
 import GeneralInfoCar from './GeneralInfoCar';
+import { useCarContext } from '../../context/carContext';
 
 interface CarModalProps {
     car: ICars | null;
@@ -16,16 +17,25 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
     const [price, setPrice] = useState(car?.price?.toString() || '');
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
+    const { deleteImages, setDeleteImages} = useCarContext();
 
     const href = car?.id ? `/admin/car/${car.id}` : '/admin/car/new';
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
+        const instruction = []
         const formData = new FormData();
         if (file) {
+            const main = {
+                fileName: file.name,
+                imgType: 'main',
+            }
+            instruction.push(main);
             formData.append('file', file);
         }
+        formData.append('instruction', JSON.stringify(instruction));
+        formData.append('deleteImages', JSON.stringify(deleteImages));
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
@@ -71,7 +81,6 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
                         setDescription={setDescription} 
                         price={price} 
                         setPrice={setPrice} 
-                        car={car} 
                     />
                     <div className="modal-actions">
                         <button

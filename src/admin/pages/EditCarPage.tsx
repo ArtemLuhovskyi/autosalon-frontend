@@ -2,12 +2,12 @@ import { useAdmin } from '../../context/adminContext';
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GlobalAdminCar from "../components/GlobalAdminCar";
-import useCar from '../../hooks/useCar';
+import { useCarContext } from '../../context/carContext';
 
 export default function EditCarPage() {
     const { isAuthenticated } = useAdmin();
     const navigate = useNavigate();
-    const {car, getCar} = useCar();
+    const {car, getCar} = useCarContext();
     const params = useParams();
     const id = params.id;
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function EditCarPage() {
     return (
         <>
          {car ? (
-                <GlobalAdminCar car={car} />
+                <GlobalAdminCar />
             ) : (
                 <p>Loading...</p>
             )}

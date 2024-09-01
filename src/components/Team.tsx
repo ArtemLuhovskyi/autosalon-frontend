@@ -13,7 +13,6 @@ const Team = forwardRef<HTMLDivElement>((props, ref) => {
             `${process.env.REACT_APP_DEV_URL}/getTeam`
         );
         const dataTeam = await response.json();
-        console.log('getSecondResponse: ', dataTeam);
         setTeam(dataTeam.data);
         return dataTeam;
     };

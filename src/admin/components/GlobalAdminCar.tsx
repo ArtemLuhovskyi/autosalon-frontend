@@ -6,17 +6,18 @@ import Header from "../../components/Header";
 import AdditionalInfoCar from "./AdditionalInfoCar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IAdditionalBlock } from "../../interfaces/additionalInfoCar";
-import useCar from "../../hooks/useCar";
 import GalleryInfoCar from "./GalleryInfoCar";
-import { IGalleryImage } from "../../interfaces/gallery";
+import { IGalleryImage, ISalonImage } from "../../interfaces/gallery";
+import DescriptionInfoCar from "./DescriptionInfoCar";
+import { IDescriptionBlock } from "../../interfaces/descriptionBlocks";
+import { useCarContext } from "../../context/carContext";
+import InsideInfoCar from "./InsideInfoCar";
+import HeroImageCar from "./HeroImageCar";
 
-interface GlobalAdminCarProps {
-    car: ICars | null;
-}
 
-export default function GlobalAdminCar({ car }: GlobalAdminCarProps) {
+export default function GlobalAdminCar() {
+    const { getCar, deleteImages, setDeleteImages, car} = useCarContext();
     const fixed = useFixed();
-    const navigate = useNavigate();
     const [title, setTitle] = useState(car?.title || '');
     const [description, setDescription] = useState(car?.description || '');
     const [price, setPrice] = useState(car?.price?.toString() || '');
@@ -24,37 +25,75 @@ export default function GlobalAdminCar({ car }: GlobalAdminCarProps) {
     const [fileName, setFileName] = useState<string | null>(null);
 
     const [galleryImages, setGalleryImages] = useState<IGalleryImage[]>([{file: null, fileName: null}]);
+    const [salonImages, setSalonImages] = useState<ISalonImage[]>([{file: null, fileName: null}]);
+
+    const [heroFile, setHeroFile] = useState<File | null>(null);
+    const [heroFileName, setHeroFileName] = useState<string | null>(null);
 
     const [blocks, setBlocks] = useState<IAdditionalBlock[]>([]);
+    const [descriptionBlocks, setDescriptionBlocks] = useState<IDescriptionBlock[]>([]);
 
-    const { getCar} = useCar();
     const params = useParams();
     const id = params.id;
+
     useEffect(() => {
         if (id) {
             getCar(id);
             setBlocks(car?.additional_info || []);
+            setDescriptionBlocks(car?.description_info || []);
         }
     }, [id]);
 
-    console.log('additional : ', car);
-
-
     const saveCar = async (event: React.FormEvent) => {
         event.preventDefault();
-        
+        const instruction = []
         const formData = new FormData();
+        if (heroFile) {
+            const hero = {
+                fileName: heroFile.name,
+                imgType: 'hero',
+            }
+            instruction.push(hero);
+            formData.append('file', heroFile);
+        }
         if (file) {
+            const main = {
+                fileName: file.name,
+                imgType: 'main',
+            }
+            instruction.push(main);
             formData.append('file', file);
         }
+        galleryImages.forEach((image, index) => {
+            if (image.file) {
+                const gallery = {
+                    fileName: image.fileName,
+                    imgType: 'gallery',
+                }
+                instruction.push(gallery);
+                formData.append(`file`, image.file);
+            }
+        });
+        salonImages.forEach((image, index) => {
+            if (image.file) {
+                const salon = {
+                    fileName: image.fileName,
+                    imgType: 'description',
+                }
+                instruction.push(salon);
+                formData.append(`file`, image.file);
+            }
+        });
+        formData.append('instruction', JSON.stringify(instruction));
+        formData.append('deleteImages', JSON.stringify(deleteImages));
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
         formData.append('blocks', JSON.stringify(blocks));
+        formData.append('descriptionBlocks', JSON.stringify(descriptionBlocks));
         if (car) {
             formData.append('id', car.id.toString());
         }
-        console.log('additional: ',blocks);
         const url = car
             ? `${process.env.REACT_APP_DEV_URL}/updateCar`
             : `${process.env.REACT_APP_DEV_URL}/addCar`;
@@ -72,8 +111,6 @@ export default function GlobalAdminCar({ car }: GlobalAdminCarProps) {
 
         const result = await response.json();
         console.log('Car submitted successfully:', result);
-
-        // getAllCars();
     }
 
     return(
@@ -95,8 +132,17 @@ export default function GlobalAdminCar({ car }: GlobalAdminCarProps) {
                         setDescription={setDescription} 
                         price={price} 
                         setPrice={setPrice} 
-                        car={car} />
+                        />
                 </div>
+                <div className="modal-content">
+                <h2>Hero image</h2>
+                <HeroImageCar 
+                    heroFile={heroFile}
+                    setHeroFile={setHeroFile}
+                    heroFileName={heroFileName}
+                    setHeroFileName={setHeroFileName}
+                />
+            </div>
             <div className="modal-content">
                 <h2>Gallery</h2>
                 <GalleryInfoCar 
@@ -110,6 +156,25 @@ export default function GlobalAdminCar({ car }: GlobalAdminCarProps) {
                 <AdditionalInfoCar
                 blocks={blocks}
                 setBlocks={setBlocks}
+                car={car}
+                />
+            </div>
+        </div>
+        <h2 className="auto--info__title h2-auto">Description</h2>
+        <div className="block-content">
+            <div className="modal-content">
+                <h2>Info</h2>
+                <DescriptionInfoCar
+                descriptionBlocks={descriptionBlocks}
+                setDescriptionBlocks={setDescriptionBlocks}
+                car={car}
+                />
+            </div>
+            <div className="modal-content">
+                <h2>Inside the car</h2>
+                <InsideInfoCar
+                salonImages={salonImages}
+                setSalonImages={setSalonImages}
                 car={car}
                 />
             </div>

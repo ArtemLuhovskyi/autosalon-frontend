@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import useCar from "../hooks/useCar";
 import { useParams } from "react-router-dom";
+import { useCarContext } from "../context/carContext";
 
 export default function CharacteristicsCar() {
-    const { car, getCar} = useCar();
+    const { car, getCar} = useCarContext();
     const params = useParams();
     const id = params.id;
     useEffect(() => {
         if (id) {
             getCar(id);
         }
-    }, [id]);
-
-    console.log('additional : ', car);
-    
+    }, [id]);    
 
     return (
     <>
@@ -29,12 +26,12 @@ export default function CharacteristicsCar() {
                                             <th className="red-text-table" style={{width: '80%'}} colSpan={2}>{item.title}</th>
                                         </tr>
                                         <>{item.characteristics.map((characteristic, index) => (
-                                                <tr key={index} >
+                                                <tr key={index}>
                                                     <td className="title-table">{characteristic.name}</td>
                                                     <td>{characteristic.value}</td>
                                                 </tr>
-                                            ))}</>
-                                        </>
+                                        ))}</>
+                                    </>
                                     ))
                             ) : (
                                 <tr>

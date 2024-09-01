@@ -6,42 +6,63 @@ import DescriptionsCar from "../components/DescriptionsCar";
 import Footer from "../components/Footer";
 import HeaderCar from "../components/HeaderCar";
 import useFixed from "../hooks/useFixed";
-import useCarId from "../hooks/useCarId";
-import { useEffect } from 'react';
-import useCar from '../hooks/useCar';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useCarContext } from '../context/carContext';
+import { GalleryType, IGallery } from '../interfaces/gallery';
 
 
 export default function CarPage() {
-    const fixed = useFixed();
-    const car = useCarId();
+    const navigate = useNavigate();
 
-    const { getCar} = useCar();
+    const fixed = useFixed();
+    const [ images, setImages ] =  useState<IGallery[]>([]);
+    const { car, getCar, getImagesByType} = useCarContext();
     const params = useParams();
     const id = params.id;
+
+    const getImgCar = () => {
+        let url = ''
+
+        if (images && images.length > 0) {
+            url =  images[0].img_url
+        } 
+        return `${process.env.REACT_APP_DEV_URL}/${url}`;
+    };
+
+    
+
     useEffect(() => {
         if (id) {
-            getCar(id);
+            const loadCar = async () => {
+                const car = await getCar(id);
+                if (!car) {
+                    navigate('/404')
+                }
+            }
+        loadCar();
         }
     }, [id]);
 
     useEffect(() => {
         if (car) {
             document.title = `${car.title}`;
+            const imgs = getImagesByType(GalleryType.hero)
+            setImages(imgs)
         }
     }, [car]);
     return (
         <>
         <HeaderCar  title={car?.title ?? ''} fixed={fixed} />
-        <div className="intro__auto" style={{ backgroundImage: `url(${car?.additional_info?.hero_image})` }}  id="intro"></div>
+        <div className="intro__auto" style={{ backgroundImage: `url(${getImgCar()})`  }}  id="intro"></div>
         <div className="container--auto" id="auto">
             <h1>{car?.title}</h1>
             <div className="auto">
-                <GalleryCar car={car} />
+                <GalleryCar  />
                 <CharacteristicsCar />
             </div>
         </div>
-        <DescriptionsCar car={car} />
+        <DescriptionsCar />
         <Footer />
         </>
         

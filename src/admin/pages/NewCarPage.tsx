@@ -20,7 +20,7 @@ export default function NewCarPage() {
     
     return (
         <>
-        <GlobalAdminCar car={null} />
+        <GlobalAdminCar  />
         </>
       
 

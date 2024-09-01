@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import '../../css/table-cars-section.css';
 import { ICars } from '../../interfaces/cars';
 import CarModal from './CarModal';
-import useCar from '../../hooks/useCar';
+import { useCarContext } from '../../context/carContext';
 
 export default function CarsSection() {
-    const {getAllCars, deleteCar, car, cars, error, isLoading, getImgCar} = useCar();
+    const {getAllCars, deleteCar, car, cars, error, isLoading, getImgCar, getCar, setCar} = useCarContext();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [currentCar, setCurrentCar] = useState<ICars | null>(null);
 
@@ -13,14 +13,15 @@ export default function CarsSection() {
         getAllCars();
     }, []);
 
-    const handleOpenModal = (car: ICars | null) => {
-        setCurrentCar(car);
+    const handleOpenModal = async (car: ICars | null) => {
+        const editCar = await getCar(car?.id.toString() || '');
+        setCurrentCar(editCar);
         setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setCurrentCar(null);
+        setCar(null);
     };
 
     return (
