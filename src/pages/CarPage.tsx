@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useCarContext } from '../context/carContext';
 import { GalleryType, IGallery } from '../interfaces/gallery';
+import Button from '../components/Button/Button';
+import { useCartContext } from '../context/cartContext';
 
 
 export default function CarPage() {
@@ -21,6 +23,7 @@ export default function CarPage() {
     const params = useParams();
     const id = params.id;
 
+
     const getImgCar = () => {
         let url = ''
 
@@ -30,7 +33,22 @@ export default function CarPage() {
         return `${process.env.REACT_APP_DEV_URL}/${url}`;
     };
 
-    
+    const { addCarToCart, isCarInCart } = useCartContext();
+    const [isAdded, setIsAdded] = useState(false); 
+
+    const handleAddCarToCart = () => {
+        if (car) { 
+            addCarToCart(car);
+            setIsAdded(true);
+        }
+    };
+
+    useEffect(() => {
+        if (car) {
+            const inCart = isCarInCart(car.id.toString());
+            setIsAdded(inCart);
+        }
+    }, [car, isCarInCart]);
 
     useEffect(() => {
         if (id) {
@@ -63,6 +81,18 @@ export default function CarPage() {
             </div>
         </div>
         <DescriptionsCar />
+
+        <Button
+                isActive={isAdded}
+                onClick={handleAddCarToCart}
+                disabled={isAdded}
+                style={{
+                    margin: '20px auto',
+                    display: 'flex'
+                }}
+            >
+                {isAdded ? 'Авто добавлено' : 'Добавить в корзину'}
+            </Button>
         <Footer />
         </>
         

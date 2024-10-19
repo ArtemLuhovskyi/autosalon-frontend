@@ -107,6 +107,10 @@ h1 {
 	margin-left: 0;
 }
 
+.nav__link:nth-last-child(-n+2) {
+	margin-right: 20px;
+}
+
 .nav__link:hover {
 	opacity: 1;
 	/*text-decoration: underline;*/
@@ -436,7 +440,7 @@ h1 {
     background-color: #fff;
     position: absolute;
     left: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    /* transition: transform 0.5s ease, opacity 0.5s ease; */
 }
 
 .burger__line:nth-child(1) {
@@ -493,6 +497,7 @@ h1 {
     	display: none;
 		width: 100%;
 		flex-direction: column;
+		align-items: end;
 
 		background-color: #31344e;
 		text-align: right;
@@ -501,6 +506,10 @@ h1 {
 		top: 100%;
 		right: 0;
     }
+
+	.nav__link:nth-last-child(-n+2) {
+		margin-right: 0;
+	}
 
 	.nav.show {
 		display: flex;

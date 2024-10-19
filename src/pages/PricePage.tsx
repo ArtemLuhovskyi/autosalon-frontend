@@ -30,8 +30,8 @@ export default function PricePage() {
         <div className="intro__price" id="intro"></div>
             <div className="price-list">
                 <div className="container">
-                    <h1>Price list</h1>
-                    <h3>Currently, we offer the following cars at the following prices (prices are indicated in different configurations):</h3>
+                    <h1>Прайс-лист</h1>
+                    <h3>На даний момент ми пропонуємо наступні автомобілі за такими цінами:</h3>
                     <div className="our-auto">
                     {cars.map(car => (
                     <CarItem key={car.id} {...car} />

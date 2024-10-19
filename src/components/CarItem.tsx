@@ -1,6 +1,7 @@
 import { Link, useLocation  } from 'react-router-dom';
 import { ICars } from '../interfaces/cars';
 import { GalleryType, IGallery } from '../interfaces/gallery';
+import { useCarContext } from '../context/carContext';
 
 export default function CarItem(car: ICars) {
 
@@ -9,11 +10,7 @@ export default function CarItem(car: ICars) {
     const location = useLocation()
     const isPricePage = location.pathname === '/price'
 
-    function formatPrice(price: string): string {
-        return price.replace(/\d+/g, (match) => {
-            return new Intl.NumberFormat('en-US').format(parseInt(match, 10));
-        });
-    }
+    const { formatPrice} = useCarContext();
     const getImgCar = (images: IGallery[]) => {
         const url =  images.find(
           (image) => image.img_type === GalleryType.main

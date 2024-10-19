@@ -21,7 +21,7 @@ export default function CharacteristicsCar() {
                         <tbody>
                             {car?.additional_info && car.additional_info.length > 0 ? (
                                 car?.additional_info?.map((item, index) => (
-                                    <>
+                                    <React.Fragment key={index}>
                                         <tr key={index} className="first-row-table">
                                             <th className="red-text-table" style={{width: '80%'}} colSpan={2}>{item.title}</th>
                                         </tr>
@@ -31,7 +31,7 @@ export default function CharacteristicsCar() {
                                                     <td>{characteristic.value}</td>
                                                 </tr>
                                         ))}</>
-                                    </>
+                                    </React.Fragment>
                                     ))
                             ) : (
                                 <tr>

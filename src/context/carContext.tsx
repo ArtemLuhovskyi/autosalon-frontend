@@ -5,6 +5,7 @@ import { IGalleryImage, GalleryType, IGallery } from '../interfaces/gallery';
 
 interface CarContextType {
     getAllCars: () => Promise<any>;
+    formatPrice: (price: string) => string;
     deleteCar: (id: number) => Promise<any>;
     car: ICars | null;
     setCar: React.Dispatch<React.SetStateAction<ICars | null>>;
@@ -32,6 +33,12 @@ export const CarProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const params = useParams();
         return Number(params.id);
     };
+
+    function formatPrice(price: string): string {
+        return price.replace(/\d+/g, (match) => {
+            return new Intl.NumberFormat('en-US').format(parseInt(match, 10));
+        });
+    }
 
     const getAllCars = async () => {
         const response = await fetch(
@@ -105,6 +112,7 @@ export const CarProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return (
         <CarContext.Provider value={{
             getAllCars,
+            formatPrice,
             deleteCar,
             car,
             cars,
