@@ -9,14 +9,14 @@
     justify-content: flex-end;
     align-items: flex-start;
     z-index: 1000;
-    transition: opacity 0.3s ease-in-out; /* Плавный переход для фона */
+    transition: opacity 0.3s ease-in-out; 
     opacity: 0;
-    pointer-events: none; /* Отключаем клики, когда закрыто */
+    pointer-events: none; 
 }
 
 .car__basket.open {
-    opacity: 1; /* Плавное появление */
-    pointer-events: auto; /* Включаем клики при открытии */
+    opacity: 1; 
+    pointer-events: auto; 
 }
 
 .car__basket--content {
@@ -28,11 +28,11 @@
     height: 100%;
     box-shadow: -3px 0px 15px rgba(0, 0, 0, 0.1);
     transform: translateX(100%);
-    transition: transform 0.4s ease-in-out; /* Плавное выезжание */
+    transition: transform 0.4s ease-in-out; 
 }
 
 .car__basket.open .car__basket--content {
-    transform: translateX(0); /* Позиция корзины при открытии */
+    transform: translateX(0); 
 }
 
 .car__basket--close {
@@ -71,4 +71,36 @@
 .car__basket--content svg {
     display: block;
     margin: 0 auto;
+}
+
+
+.confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.modal--main {
+    font-size: 19px;
+    text-align: left;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.modal--btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }

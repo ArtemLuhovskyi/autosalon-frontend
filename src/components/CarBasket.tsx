@@ -1,20 +1,24 @@
 import { IoCarOutline } from "react-icons/io5";
 import '../css/basket.css';
+import { useCarContext } from '../context/carContext';
 import { useCartContext } from '../context/cartContext';
+import Button from '../components/Button/Button';
 
 function CarBasket({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-    const { cart, removeCarFromCart } = useCartContext(); // Используем контекст корзины
-    const cartCar = cart; // Корзина хранит только одну машину
+    const { formatPrice} = useCarContext();
 
-    const priceCarBasket = cartCar ? `$${cartCar.price.toString()}` : '';
+    const { cart, removeCarFromCart } = useCartContext(); 
+    const cartCar = cart; 
+
+    const priceCarBasket = cartCar ? `$${formatPrice(cartCar.price.toString())}` : '';
 
     const handleRemoveCar = () => {
-        removeCarFromCart(); // Удалить машину из корзины
-        onClose(); // Закрыть модальное окно
+        removeCarFromCart(); 
+        onClose(); 
     };
 
     return (
-        <div className={`car__basket ${isOpen ? 'open' : ''}`}>
+        <div className={`car__basket ${isOpen ? 'open' : ''}`} style={{textTransform: 'none'}}>
             <div className="car__basket--content">
                 <button className='car__basket--close' onClick={onClose}>&times;</button>
                 {cartCar ? (
@@ -31,9 +35,14 @@ function CarBasket({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                         )}
                         <p className='p--basket'>{cartCar.description}</p>
                         <p className='p--basket'>Ціна: {priceCarBasket}</p>
-                        <button onClick={handleRemoveCar}>
-                            Видалити з кошика
-                        </button>
+                        <Button
+                        style={{marginTop: '10px'}}
+                            isActive={false}
+                            onClick={handleRemoveCar}
+                            >
+                            Видалити з кошика  
+                        </Button>
+                        
                     </>
                 ) : (
                     <>

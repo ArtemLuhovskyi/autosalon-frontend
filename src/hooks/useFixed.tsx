@@ -18,7 +18,6 @@ export default function useFixed() {
         };
     }, []);
 
-    // Функция для прокрутки вверх страницы при переходе на новую страницу
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -26,7 +25,6 @@ export default function useFixed() {
         });
     };
 
-    // Вызываем функцию прокрутки вверх при загрузке новой страницы
     useEffect(() => {
         scrollToTop();
     }, []);

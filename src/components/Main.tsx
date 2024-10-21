@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import Buy from "./Buy";
+import Order from "./Order";
 import Cars from "./Cars";
 import InterestingForUs from "./InterestingForUs";
 import Intro from "./Intro";
@@ -10,7 +10,7 @@ const Main = forwardRef<HTMLDivElement>((props, ref:any) => {
         <>
         <Intro ref={ref?.mainRef} />
         <Cars ref={ref?.autoRef} />
-        <Buy ref={ref?.buyRef} />
+        <Order ref={ref?.buyRef} />
         <Team ref={ref?.teamRef} />
         <InterestingForUs ref={ref?.interestingRef} />
         </>

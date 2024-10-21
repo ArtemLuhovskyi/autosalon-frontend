@@ -4,15 +4,15 @@ import { ICars } from '../interfaces/cars';
 interface CartContextType {
     addCarToCart: (car: ICars) => void;
     isCarInCart: (id: string | undefined) => boolean;
-    removeCarFromCart: () => void; // убираем параметр id, так как теперь только одна машина
-    cart: ICars | null; // изменяем тип на ICars | null, так как может быть одна машина или null
+    removeCarFromCart: () => void; 
+    cart: ICars | null; 
 }
 
 const CartContext = createContext<CartContextType>({
     addCarToCart: () => {},
     isCarInCart: () => false,
     removeCarFromCart: () => {},
-    cart: null, // инициализируем cart как null
+    cart: null, 
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -30,7 +30,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }, [cart]);
 
     const addCarToCart = (car: ICars) => {
-        setCart(car); // добавляем машину в корзину (перезаписываем)
+        setCart(car); 
     };
 
     const isCarInCart = (id: string | undefined): boolean => {
@@ -38,7 +38,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const removeCarFromCart = () => {
-        setCart(null); // очищаем корзину
+        setCart(null); 
     };
 
     return (

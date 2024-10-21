@@ -12,7 +12,8 @@ import { useCarContext } from '../context/carContext';
 import { GalleryType, IGallery } from '../interfaces/gallery';
 import Button from '../components/Button/Button';
 import { useCartContext } from '../context/cartContext';
-
+import ModalBasketConfirm from '../components/ModalBasketConfirm';
+import { ICars } from '../interfaces/cars';
 
 export default function CarPage() {
     const navigate = useNavigate();
@@ -33,14 +34,36 @@ export default function CarPage() {
         return `${process.env.REACT_APP_DEV_URL}/${url}`;
     };
 
-    const { addCarToCart, isCarInCart } = useCartContext();
+    const { addCarToCart, isCarInCart, cart } = useCartContext();
     const [isAdded, setIsAdded] = useState(false); 
 
+    const [isConfirmModalOpen, setConfirmModalOpen] = useState(false); 
+    const [pendingCar, setPendingCar] = useState<ICars | null>(null);
+
+
     const handleAddCarToCart = () => {
-        if (car) { 
-            addCarToCart(car);
+        if (car) {
+            if (cart && cart.id !== car.id) {
+                setPendingCar(car);
+                setConfirmModalOpen(true);
+            } else {
+                addCarToCart(car);
+                setIsAdded(true);
+            }
+        }
+    };
+
+    const confirmOverwrite = () => {
+        if (pendingCar) {
+            addCarToCart(pendingCar);
             setIsAdded(true);
         }
+        setConfirmModalOpen(false);
+    };
+
+    const cancelOverwrite = () => {
+        setPendingCar(null);
+        setConfirmModalOpen(false);
     };
 
     useEffect(() => {
@@ -69,6 +92,7 @@ export default function CarPage() {
             setImages(imgs)
         }
     }, [car]);
+    
     return (
         <>
         <HeaderCar  title={car?.title ?? ''} fixed={fixed} />
@@ -91,8 +115,15 @@ export default function CarPage() {
                     display: 'flex'
                 }}
             >
-                {isAdded ? 'Авто добавлено' : 'Добавить в корзину'}
-            </Button>
+                {isAdded ? 'Авто вже додано' : 'Додати до кошика'}
+        </Button>
+
+        <ModalBasketConfirm
+                isOpen={isConfirmModalOpen}
+                onConfirm={confirmOverwrite}
+                onCancel={cancelOverwrite}
+            />
+        
         <Footer />
         </>
         
