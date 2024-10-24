@@ -30,7 +30,9 @@ const useForm = () => {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        
         const { name, value } = e.target;
+
         setContactFields(prevFields => ({
             ...prevFields,
             [name]: value,
@@ -43,9 +45,10 @@ const useForm = () => {
     };
 
     const validatePhone = (phone: string) => {
-        const re = /^[0-9\b]+$/;
+        const re = /^[0-9\b]+$/; 
         return re.test(phone);
-    };  
+    };
+
     const handleValidation = () => {
         const newErrors: { [key: string]: string } = {};
 
@@ -67,12 +70,29 @@ const useForm = () => {
             const cleanedFields = Object.fromEntries(
                 Object.entries(contactFields).filter(([_, value]) => value.trim() !== '')
             );
-            setOrderSubmitted(true);
-            setContactFields(initialFormState);
+
+            // fetch('YOUR_BACKEND_URL', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(cleanedFields),
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            //     setOrderSubmitted(true);
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            // });
+
+            setOrderSubmitted(true); // Устанавливаем статус отправки
+            setContactFields(initialFormState); // Сбрасываем форму
         }
     };
 
-    return { contactFields, orderSubmitted, handleChange, handleSubmit, validateEmail, validatePhone, errors };
+    return { contactFields, handleChange, errors, setContactFields, setErrors, orderSubmitted, setOrderSubmitted, handleSubmit, handleValidation };
 };
 
 export default useForm;

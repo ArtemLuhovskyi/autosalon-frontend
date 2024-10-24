@@ -47,3 +47,17 @@ h3 {
 .btn--blue:hover {
 	background-color: #0f41e9;
 }
+
+.filter {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: normal;
+    flex-direction: column;
+    margin: 55px 0;
+    gap: 10px;
+    width: 20%;
+    float: left;
+    margin-right: 20px;
+}
+

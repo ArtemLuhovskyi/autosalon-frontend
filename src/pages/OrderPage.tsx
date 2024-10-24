@@ -5,21 +5,74 @@ import HeaderCar from '../components/HeaderCar';
 import useFixed from '../hooks/useFixed';
 import Footer from '../components/Footer';
 import useForm from '../hooks/useForm';
+import { useCartContext } from '../context/cartContext';
+import { ICars } from '../interfaces/cars';
 
 const OrderPage: React.FC = () => {
     const {
+        orderSubmitted, 
+        setOrderSubmitted,
         contactFields,
-        orderSubmitted,
         handleChange,
-        handleSubmit,
         errors,
+        handleValidation
     } = useForm();
 
+    const { cart, removeCarFromCart } = useCartContext(); 
     const fixed = useFixed();
 
+    const getAllCars = async () => {
+        const response = await fetch(`${process.env.REACT_APP_DEV_URL}/getCars`);
+        const dataCars = await response.json();
+        setCars(dataCars.data);  
+    };
+    const [cars, setCars] = useState<ICars[]>([]); 
+
     useEffect(() => {
+        getAllCars();
         document.title = `Order - form`;
     }, []);
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (!handleValidation()) {
+            console.log('Форма содержит ошибки:', errors);
+            return; 
+        }
+        const selectedType = contactFields.type || (cart && cart.title ? cart.title : '');
+        const dataToSend = {
+            username: contactFields.username,
+            company_name: contactFields.company_name,
+            telephone: contactFields.telephone,
+            email: contactFields.email,
+            car: selectedType,
+            wishes: contactFields.textarea,
+        };
+
+        try {
+            console.log(dataToSend);
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/submitOrder`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify(dataToSend), 
+            });
+            
+            
+            if (response.ok) {
+                removeCarFromCart();
+                setOrderSubmitted(true);
+                console.log('Ответ сервера:', await response.json());
+                
+            } else {
+                console.error('Ошибка при отправке формы:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Ошибка при отправке запроса:', error);
+        }
+    };
 
     return (
         <>
@@ -86,32 +139,19 @@ const OrderPage: React.FC = () => {
                             </div>
                             <div className="right-forma">
                                 <div className="block">
-                                    <div className="name">Яке авто берем?</div>
+                                    <div className="name">Бажане авто</div>
                                     <select
                                         name="type"
-                                        value={contactFields.type}
+                                        value={contactFields.type || (cart ? cart.title : '')} 
                                         onChange={handleChange}
                                         required
                                     >
-                                        <option value="">...</option>
-                                        <option value="BMW 7-серії">
-                                            BMW 7-серії
+                                    <option value="">...</option>
+                                    {cars.map((car) => (
+                                        <option key={car.id} value={car.title}>
+                                            {car.title}
                                         </option>
-                                        <option value="Bugatti Veyron">
-                                            Bugatti Veyron
-                                        </option>
-                                        <option value="Lamborghini Huracan LP610-4">
-                                            Lamborghini Huracan LP610-4
-                                        </option>
-                                        <option value="Land Rover Defender 90">
-                                            Land Rover Defender 90
-                                        </option>
-                                        <option value="Porsche 911 Carrera">
-                                            Porsche 911 Carrera
-                                        </option>
-                                        <option value="Tesla Model X P100D">
-                                            Tesla Model X P100D
-                                        </option>
+                                    ))}
                                     </select>
                                 </div>
                                 <div className="block">

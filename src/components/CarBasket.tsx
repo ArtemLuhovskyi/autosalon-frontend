@@ -3,6 +3,7 @@ import '../css/basket.css';
 import { useCarContext } from '../context/carContext';
 import { useCartContext } from '../context/cartContext';
 import Button from '../components/Button/Button';
+import { Link, useLocation } from "react-router-dom";
 
 function CarBasket({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
     const { formatPrice} = useCarContext();
@@ -16,6 +17,9 @@ function CarBasket({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
         removeCarFromCart(); 
         onClose(); 
     };
+
+    const location = useLocation()
+    const isOrderPage = location.pathname === '/order'
 
     return (
         <div className={`car__basket ${isOpen ? 'open' : ''}`} style={{textTransform: 'none'}}>
@@ -42,6 +46,21 @@ function CarBasket({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                             >
                             Видалити з кошика  
                         </Button>
+
+                        <Link
+                            style={{
+                             width: '94%',
+                            fontSize: '12px',
+                            position: 'absolute',
+                            top: '92%',
+                            left: '3%',
+                            cursor: isOrderPage ? 'not-allowed' : 'pointer',
+                            pointerEvents: isOrderPage ? 'none' : 'auto',  
+                            opacity: isOrderPage ? 0.6 : 1,  
+                            }}
+                            to={!isOrderPage ? "/order" : "#"}  
+                            className="btn btn--red"
+                            >{isOrderPage ? 'Ми вже тут' : 'Перейти до замовлення авто'}</Link>
                         
                     </>
                 ) : (

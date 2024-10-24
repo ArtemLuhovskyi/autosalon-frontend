@@ -24,7 +24,7 @@ export default function CarItem(car: ICars) {
     const priceCarString = `Price: from $${formatPrice(price.toString())} `
 
     return (
-        <div className="our-auto__item">
+        <div className="our-auto__item" style={{padding: isPricePage ? '0 25px' : '0 40px'}}>
             {isPricePage 
             ? <>
             <img className="our-auto__icon" src={getImgCar(images)} alt=""/>

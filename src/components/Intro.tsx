@@ -7,7 +7,7 @@ const Intro = forwardRef<HTMLDivElement>((props, ref) => {
         <div className="intro__inner">
             <h1 className="intro__title">Автосалон "NewAuto"</h1>
             <div className="intro__subtitle">Пропонує найсучасніші та недорогі авто на будь-який смак</div>
-            <Link to="/order" className="btn btn--red">Замовити одразу</Link>
+            <Link to="/price" className="btn btn--red">Обрати авто</Link>
         </div>
         </div>
     )

@@ -3,7 +3,6 @@ import Footer from '../components/Footer';
 import Main from '../components/Main';
 import {  useEffect, useRef, useState  } from 'react';
 import useFixed from '../hooks/useFixed';
-import { get } from 'http';
 
 export default function HomePage() {
 
