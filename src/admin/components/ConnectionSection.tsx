@@ -69,7 +69,13 @@ export default function ConnectionSection({ onNewConnectionCount }: { onNewConne
                         {connections.length === 0 && (
                             <tr>
                                 <td colSpan={6}>No orders found</td>
+
+                                <td colSpan={6}>No orders found</td>
+                                <td colSpan={6}>No orders found</td>
+                                <td colSpan={6}>No orders found</td>
+                                <td colSpan={6}>No orders found</td>
                             </tr>
+                            
                         )}
                     </tbody>
                 </table>
