@@ -27,7 +27,7 @@ export default function CarItem(car: ICars) {
         <div className="our-auto__item" style={{padding: isPricePage ? '0 25px' : '0 40px'}}>
             {isPricePage 
             ? <>
-            <img className="our-auto__icon" src={getImgCar(images)} alt=""/>
+            <img style={{transform: 'none'}} className="our-auto__icon" src={getImgCar(images)} alt=""/>
             <h4 className="our-auto__title">{title}</h4>
             </>
             : 

@@ -123,7 +123,7 @@ h1 {
 	display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 770px;
+    height: 100vh;
     background-image: url('../img/main.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -208,6 +208,10 @@ h1 {
    display: flex;
    flex-wrap: wrap;
    margin: 20px 0 50px 0;
+}
+
+.borderL {
+    border-left: 1px solid #15a0ed;
 }
 
 .our-auto__item {
@@ -577,6 +581,10 @@ h1 {
     .our-auto {
     	margin: 40px 0 ;
     }
+
+	.borderL {
+		border-left: 0;
+	}
 	.our-auto__icon {
     	width: 50%;
     }

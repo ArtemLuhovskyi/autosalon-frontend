@@ -74,10 +74,12 @@ export default function PricePage() {
                     </Button>
                     </div>
                     
-                    <div className="our-auto">
-                    {filteredCars.map(car => (
+                    <div className="our-auto borderL">
+                    {filteredCars.length > 0 ?  filteredCars.map(car => (
                     <CarItem  key={car.id} {...car} />
-                ))}
+                )) : (
+                    <p>Авто за вашим запитом не знайдено</p>
+                )}
                 </div> 
             </div>    
         </div>

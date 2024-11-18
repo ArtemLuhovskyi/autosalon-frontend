@@ -37,7 +37,7 @@ const OrderPage: React.FC = () => {
         event.preventDefault();
 
         if (!handleValidation()) {
-            console.log('Форма содержит ошибки:', errors);
+            console.log('Форма має помилки:', errors);
             return; 
         }
         const selectedType = contactFields.type || (cart && cart.title ? cart.title : '');
@@ -64,13 +64,13 @@ const OrderPage: React.FC = () => {
             if (response.ok) {
                 removeCarFromCart();
                 setOrderSubmitted(true);
-                console.log('Ответ сервера:', await response.json());
+                console.log('Відповідь сервера:', await response.json());
                 
             } else {
-                console.error('Ошибка при отправке формы:', response.statusText);
+                console.error('Помилка при відпраці: ', response.statusText);
             }
         } catch (error) {
-            console.error('Ошибка при отправке запроса:', error);
+            console.error('Помилка:', error);
         }
     };
 

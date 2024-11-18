@@ -6,12 +6,16 @@ import TeamSection from './TeamSection';
 import Header from '../../components/Header';
 import useFixed from '../../hooks/useFixed';
 import OrderSection from './OrderSection';
+import DriveSection from './DriveSection';
+import ConnectionSection from './ConnectionSection';
 
 export default function Dashboard() {
     const [tab, setTab] = useState('cars');
     const fixed = useFixed();
 
     const [newOrderCount, setNewOrderCount] = useState(0);
+    const [newDriveCount, setNewDriveCount] = useState(0);
+    const [newConnectionCount, setNewConnectionCount] = useState(0);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -26,6 +30,32 @@ export default function Dashboard() {
         };
 
         fetchOrders();
+
+        const fetchDrives = async () => {
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/getDrives`);
+            const drives = await response.json();
+
+            const viewedDrives = JSON.parse(localStorage.getItem('viewedDrives') || '[]');
+
+            const newDrives = drives.filter((drives: any) => !viewedDrives.includes(drives.id));
+
+            setNewDriveCount(newDrives.length);
+        };
+
+        fetchDrives();
+
+        const fetchConnections = async () => {
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/getConnection`);
+            const connections = await response.json();
+
+            const viewedConnections = JSON.parse(localStorage.getItem('viewedConnections') || '[]');
+
+            const newConnections = connections.filter((connections: any) => !viewedConnections.includes(connections.id));
+
+            setNewConnectionCount(newConnections.length);
+        };
+
+        fetchConnections();
     }, []); 
 
     return (
@@ -38,11 +68,15 @@ export default function Dashboard() {
                     active={tab}
                     onChange={(current) => setTab(current)}
                     orderCount={newOrderCount}
+                    driveCount={newDriveCount}
+                    connectionCount={newConnectionCount}
                 />
 
                 {tab === 'cars' && <CarsSection />}
                 {tab === 'team' && <TeamSection />}
                 {tab === 'orders' && <OrderSection onNewOrderCount={(count) => setNewOrderCount(count)} />}
+                {tab === 'drives' && <DriveSection onNewDriveCount={(count) => setNewDriveCount(count)} />}
+                {tab === 'connections' && <ConnectionSection onNewConnectionCount={(count) => setNewConnectionCount(count)} />}
             </main>
         </>
     );

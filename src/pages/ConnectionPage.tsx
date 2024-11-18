@@ -10,17 +10,57 @@ import ModalForm from '../components/ModalForm';
 
 export default function ConnectionPage() {
     const {
+        orderSubmitted, 
+        setOrderSubmitted,
         contactFields,
-        orderSubmitted,
         handleChange,
-        handleSubmit,
         errors,
+        handleValidation
     } = useForm();
     const fixed = useFixed();
 
     useEffect(() => {
         document.title = `Connection - form`;
     }, []);
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (!handleValidation()) {
+            console.log('Форма має помилки:', errors);
+            return; 
+        }
+        const dataToSend = {
+            username: contactFields.username,
+            company_name: contactFields.company_name,
+            telephone: contactFields.telephone,
+            email: contactFields.email,
+            problems: contactFields.type,
+            wishes: contactFields.textarea,
+        };
+
+        try {
+            console.log(dataToSend);
+            const response = await fetch(`${process.env.REACT_APP_DEV_URL}/submitConnection`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify(dataToSend), 
+            });
+            
+            
+            if (response.ok) {
+                setOrderSubmitted(true);
+                console.log('Відповідь сервера:', await response.json());
+                
+            } else {
+                console.error('Помилка при відпраці: ', response.statusText);
+            }
+        } catch (error) {
+            console.error('Помилка:', error);
+        }
+    };
 
     return (
         <>
