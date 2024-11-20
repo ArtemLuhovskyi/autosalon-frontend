@@ -13,6 +13,7 @@ import { IDescriptionBlock } from "../../interfaces/descriptionBlocks";
 import { useCarContext } from "../../context/carContext";
 import InsideInfoCar from "./InsideInfoCar";
 import HeroImageCar from "./HeroImageCar";
+import { IBrand } from "../../interfaces/brand";
 
 
 export default function GlobalAdminCar() {
@@ -23,6 +24,8 @@ export default function GlobalAdminCar() {
     const [price, setPrice] = useState(car?.price?.toString() || '');
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
+    const [brands, setBrands] = useState<IBrand[]>([]);
+    const [selectedBrand, setSelectedBrand] = useState<IBrand | null>(null); 
 
     const [galleryImages, setGalleryImages] = useState<IGalleryImage[]>([{file: null, fileName: null}]);
     const [salonImages, setSalonImages] = useState<ISalonImage[]>([{file: null, fileName: null}]);
@@ -42,6 +45,19 @@ export default function GlobalAdminCar() {
             setBlocks(car?.additional_info || []);
             setDescriptionBlocks(car?.description_info || []);
         }
+    }, [id]);
+
+    useEffect(() => {
+        const getAllBrand = async () => {
+            const response = await fetch(
+                `${process.env.REACT_APP_DEV_URL}/getBrands`
+            );
+            const dataBrands = await response.json();
+            setBrands(dataBrands.data);
+            return dataBrands;
+        };
+    
+        getAllBrand();
     }, [id]);
 
     const saveCar = async (event: React.FormEvent) => {
@@ -86,6 +102,9 @@ export default function GlobalAdminCar() {
         });
         formData.append('instruction', JSON.stringify(instruction));
         formData.append('deleteImages', JSON.stringify(deleteImages));
+        if (selectedBrand) {
+            formData.append('brand', selectedBrand.id.toString());
+        }
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
@@ -126,6 +145,9 @@ export default function GlobalAdminCar() {
                         setFile={setFile} 
                         fileName={fileName} 
                         setFileName={setFileName}
+                        brands={brands}
+                        selectedBrand={selectedBrand}
+                        setSelectedBrand={setSelectedBrand}
                         title={title} 
                         setTitle={setTitle} 
                         description={description} 

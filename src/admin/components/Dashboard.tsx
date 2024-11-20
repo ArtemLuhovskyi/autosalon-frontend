@@ -8,6 +8,7 @@ import useFixed from '../../hooks/useFixed';
 import OrderSection from './OrderSection';
 import DriveSection from './DriveSection';
 import ConnectionSection from './ConnectionSection';
+import BrandSection from './BrandSection';
 
 export default function Dashboard() {
     const [tab, setTab] = useState('cars');
@@ -73,6 +74,7 @@ export default function Dashboard() {
                 />
 
                 {tab === 'cars' && <CarsSection />}
+                {tab === 'brand' && <BrandSection />}
                 {tab === 'team' && <TeamSection />}
                 {tab === 'orders' && <OrderSection onNewOrderCount={(count) => setNewOrderCount(count)} />}
                 {tab === 'drives' && <DriveSection onNewDriveCount={(count) => setNewDriveCount(count)} />}

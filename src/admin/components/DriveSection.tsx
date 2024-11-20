@@ -37,9 +37,9 @@ export default function DriveSection({ onNewDriveCount }: { onNewDriveCount: (co
     return (
         <div className="cars-section">
             <div className="add-car-block">
-                <h2 className="add-cars-text">Orders</h2>
+                <h2 className="add-cars-text">Test-Drives</h2>
             </div>
-            <div className="table-container">
+            <div className="table-container" style={{width: '90%'}}>
                 <table>
                     <thead>
                         <tr>

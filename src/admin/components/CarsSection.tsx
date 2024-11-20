@@ -42,6 +42,7 @@ export default function CarsSection() {
                             <th>ID</th>
                             <th>Image</th>
                             <th>Name</th>
+                            <th>Brand</th>
                             <th>Price</th>
                             <th>Description</th>
                             <th>Action</th>
@@ -59,6 +60,7 @@ export default function CarsSection() {
                                     />
                                 </td>
                                 <td>{item.title}</td>
+                                <td>{item.brand?.brand}</td>
                                 <td>{item.price}</td>
                                 <td>{item.description}</td>
                                 <td>
@@ -79,7 +81,7 @@ export default function CarsSection() {
                         ))}
                         {cars.length === 0 && (
                             <tr>
-                                <td colSpan={6}>No cars found</td>
+                                <td colSpan={7}>No cars found</td>
                             </tr>
                         )}
                     </tbody>

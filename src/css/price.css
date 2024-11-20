@@ -49,15 +49,21 @@ h3 {
 }
 
 .filter {
-    position: relative;
     display: flex;
-    justify-content: flex-end;
-    align-items: normal;
     flex-direction: column;
     margin: 55px 0;
-    gap: 10px;
+    gap: 15px;
     width: 20%;
     float: left;
     margin-right: 20px;
+    padding-right: 10px;
+    border-right: 1px solid #15a0ed;
 }
 
+.label-price {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}

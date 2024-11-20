@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react';
 import ImagePreview from './ImagePreview';
 import { useCarContext } from '../../context/carContext';
 import { GalleryType } from '../../interfaces/gallery';
+import { IBrand } from '../../interfaces/brand';
 
 interface GeneralInfoCarProps {
     file: File | null;
     setFile: (file: File | null) => void;
     fileName: string | null;
     setFileName: (fileName: string | null) => void;
+    brands: IBrand[];  
+    selectedBrand: IBrand | null;  
+    setSelectedBrand: React.Dispatch<React.SetStateAction<IBrand | null>>;
     title: string;
     setTitle: (title: string) => void;
     description: string;
@@ -21,6 +25,9 @@ export default function GeneralInfoCar({
     setFile,
     fileName,
     setFileName,
+    brands,
+    selectedBrand,
+    setSelectedBrand,
     title,
     setTitle,
     description,
@@ -79,6 +86,25 @@ export default function GeneralInfoCar({
                         : undefined
                 }
             />
+            <div className="input-group">
+                <label htmlFor="title">Brand:</label>
+                <select
+                name="brand"
+                value={selectedBrand?.id?.toString() || car?.brand?.id || ''}  
+                onChange={(e) => {
+                    const selectedBrand = brands.find((b) => b.id === Number(e.target.value));   
+                    setSelectedBrand(selectedBrand || null);  
+                }}
+                required
+            >
+                <option value="">...</option>
+                {brands.map((brand) => (
+                    <option key={brand.id} value={brand.id}>
+                        {brand.brand}
+                    </option>
+                ))}
+            </select>
+            </div>
             <div className="input-group">
                 <label htmlFor="title">Title:</label>
                 <input

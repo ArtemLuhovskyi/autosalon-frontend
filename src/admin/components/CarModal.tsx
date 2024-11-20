@@ -4,6 +4,7 @@ import { ICars } from '../../interfaces/cars';
 import { Link } from 'react-router-dom';
 import GeneralInfoCar from './GeneralInfoCar';
 import { useCarContext } from '../../context/carContext';
+import { IBrand } from '../../interfaces/brand';
 
 interface CarModalProps {
     car: ICars | null;
@@ -18,6 +19,22 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
     const [file, setFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
     const { deleteImages, setDeleteImages} = useCarContext();
+
+    const [brands, setBrands] = useState<IBrand[]>([]);
+    const [selectedBrand, setSelectedBrand] = useState<IBrand | null>(null); 
+
+    useEffect(() => {
+        const getAllBrand = async () => {
+            const response = await fetch(
+                `${process.env.REACT_APP_DEV_URL}/getBrands`
+            );
+            const dataBrands = await response.json();
+            setBrands(dataBrands.data);
+            return dataBrands;
+        };
+    
+        getAllBrand();
+    }, [car?.id]);
 
     const href = car?.id ? `/admin/car/${car.id}` : '/admin/car/new';
 
@@ -36,6 +53,9 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
         }
         formData.append('instruction', JSON.stringify(instruction));
         formData.append('deleteImages', JSON.stringify(deleteImages));
+        if (selectedBrand) {
+            formData.append('brand', selectedBrand.id.toString());
+        }
         formData.append('title', title);
         formData.append('description', description);
         formData.append('price', price);
@@ -75,6 +95,9 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
                         setFile={setFile} 
                         fileName={fileName} 
                         setFileName={setFileName}
+                        brands={brands}
+                        selectedBrand={selectedBrand}
+                        setSelectedBrand={setSelectedBrand}
                         title={title} 
                         setTitle={setTitle} 
                         description={description} 
