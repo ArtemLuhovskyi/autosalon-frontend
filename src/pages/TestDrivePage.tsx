@@ -8,9 +8,12 @@ import useForm from '../hooks/useForm';
 import ModalForm from '../components/ModalForm';
 import { useCartContext } from '../context/cartContext';
 import { ICars } from '../interfaces/cars';
-import { time } from 'console';
+import { FaClosedCaptioning } from "react-icons/fa";
 
 export default function TestDrivePage() {
+
+    const [captchaValue, setCaptchaValue] = useState('');
+
     const {
         orderSubmitted, 
         setOrderSubmitted,
@@ -41,6 +44,11 @@ export default function TestDrivePage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (captchaValue !== "сс") {
+            alert("Incorrect CAPTCHA.");
+            return; 
+        }
 
         if (!handleValidation()) {
             console.log('Форма має помилки:', errors);
@@ -235,6 +243,20 @@ export default function TestDrivePage() {
                                         value={contactFields.textarea}
                                         onChange={handleChange}
                                     ></textarea>
+                                </div>
+                                <div className="block name">Please type this code
+                                    <div className="captcha" style={{display: 'flex', gap: '30px', alignItems: 'center', marginTop: '10px'}}>
+                                        <FaClosedCaptioning size={40} />
+                                        <input
+                                            type="text"
+                                            required
+                                            name="captcha"
+                                            value={captchaValue}
+                                            onChange={(e) =>
+                                                setCaptchaValue(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
                                 <div className="block block-btn btn--test">
                                     <button

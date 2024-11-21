@@ -63,7 +63,7 @@
     appearance: none;
     background: url("../img/Frame.png") no-repeat right;
     background-position-x: calc(100% - 15px);
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .right-block {
@@ -91,6 +91,7 @@
     color:#324950;
     font-size: 17px;
     padding: 0;
+    background-color: transparent;
 }
 
 

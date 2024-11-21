@@ -88,7 +88,7 @@ export default function PricePage() {
         <HeaderCar title="Price list" fixed={fixed} />
         <div className="intro__price" id="intro"></div>
             <div className="price-list">
-                <div className="container" style={{maxWidth: '1400px', minHeight: '130vh'}}>
+                <div className="container" style={{maxWidth: '1400px', minHeight: '140vh'}}>
                     <h1>Прайс-лист</h1>
                     <h3>На даний момент ми пропонуємо наступні автомобілі за такими цінами:</h3>
                     <div className="filter">

@@ -1,14 +1,18 @@
 import Footer from '../components/Footer';
 import HeaderCar from '../components/HeaderCar';
 import useFixed from '../hooks/useFixed';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/form.css';
 import '../css/connection.css';
 import ContactInfo from '../components/ContactInfo';
 import useForm from '../hooks/useForm';
 import ModalForm from '../components/ModalForm';
+import { FaClosedCaptioning } from 'react-icons/fa';
 
 export default function ConnectionPage() {
+
+    const [captchaValue, setCaptchaValue] = useState('');
+
     const {
         orderSubmitted, 
         setOrderSubmitted,
@@ -26,6 +30,11 @@ export default function ConnectionPage() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        if (captchaValue !== "сс") {
+            alert("Incorrect CAPTCHA.");
+            return; 
+        }
+        
         if (!handleValidation()) {
             console.log('Форма має помилки:', errors);
             return; 
@@ -168,6 +177,20 @@ export default function ConnectionPage() {
                                         value={contactFields.textarea}
                                         onChange={handleChange}
                                     ></textarea>
+                                </div>
+                                <div className="block name">Please type this code
+                                    <div className="captcha" style={{display: 'flex', gap: '30px', alignItems: 'center', marginTop: '10px'}}>
+                                        <FaClosedCaptioning size={40} />
+                                        <input
+                                            type="text"
+                                            required
+                                            name="captcha"
+                                            value={captchaValue}
+                                            onChange={(e) =>
+                                                setCaptchaValue(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
                                 <div className="block block-btn">
                                     <button

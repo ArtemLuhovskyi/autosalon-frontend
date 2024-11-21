@@ -7,8 +7,12 @@ import Footer from '../components/Footer';
 import useForm from '../hooks/useForm';
 import { useCartContext } from '../context/cartContext';
 import { ICars } from '../interfaces/cars';
+import { FaClosedCaptioning } from "react-icons/fa";
 
 const OrderPage: React.FC = () => {
+
+    const [captchaValue, setCaptchaValue] = useState('');
+
     const {
         orderSubmitted, 
         setOrderSubmitted,
@@ -35,6 +39,11 @@ const OrderPage: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (captchaValue !== "сс") {
+            alert("Incorrect CAPTCHA.");
+            return; 
+        }
 
         if (!handleValidation()) {
             console.log('Форма має помилки:', errors);
@@ -72,6 +81,10 @@ const OrderPage: React.FC = () => {
         } catch (error) {
             console.error('Помилка:', error);
         }
+    };
+
+    const handleCaptchaChange = (value:any) => {
+        setCaptchaValue(value);
     };
 
     return (
@@ -162,6 +175,20 @@ const OrderPage: React.FC = () => {
                                         value={contactFields.textarea}
                                         onChange={handleChange}
                                     ></textarea>
+                                </div>
+                                <div className="block name">Please type this code
+                                    <div className="captcha" style={{display: 'flex', gap: '30px', alignItems: 'center', marginTop: '10px'}}>
+                                        <FaClosedCaptioning size={40} />
+                                        <input
+                                            type="text"
+                                            required
+                                            name="captcha"
+                                            value={captchaValue}
+                                            onChange={(e) =>
+                                                setCaptchaValue(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
                                 <div className="block block-btn">
                                     <button
