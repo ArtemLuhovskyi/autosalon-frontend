@@ -91,6 +91,7 @@ export const CarProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         const result = await response.json();
         await getAllCars();
+        alert('Операція пройшла успішно');
         return result;
     };
 

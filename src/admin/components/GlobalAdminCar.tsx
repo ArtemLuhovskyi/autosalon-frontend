@@ -129,6 +129,7 @@ export default function GlobalAdminCar() {
         }
 
         const result = await response.json();
+        alert('Операція пройшла успішно');
         console.log('Car submitted successfully:', result);
     }
 

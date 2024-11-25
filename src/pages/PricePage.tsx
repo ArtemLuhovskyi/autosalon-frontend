@@ -115,8 +115,8 @@ export default function PricePage() {
                     </Button>
 
                         <div className="input-group" style={{margin:'0',display: 'flex', flexDirection: 'column', gap: '10px', borderTop: '1px solid #15a0ed', paddingTop: '10px'}}>
-                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', gap: '10px'}}>
-                            <h4 style={{fontSize: '18px'}}>Ціна ($):</h4>
+                        <h4 style={{fontSize: '18px'}}>Ціна ($):</h4>
+                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px'}}>
                                 <label htmlFor="price-from" style={{fontSize: '16px'}}>Від</label>
                                 <input
                                     type="number"
@@ -137,11 +137,11 @@ export default function PricePage() {
                                 />
                             </div>
                         </div>
-                    <div className='input-group' style={{display: 'flex', flexDirection: 'column', gap: '10px', borderTop: '1px solid #15a0ed', paddingTop: '10px'}}>
+                    <div className='input-group' style={{display: 'flex', flexDirection: 'column', gap: '10px', borderTop: '1px solid #15a0ed', paddingTop: '10px', margin: '0'}}>
                         <h4 style={{fontSize: '18px'}}>Марки авто:</h4>
                             {brands.map((brand: IBrand) => (
                                 
-                                <label className='label-price' key={brand.id} htmlFor={brand.brand}  style={{ marginRight: '1rem', fontSize: '14px', display: 'flex', alignItems: 'center' }}>
+                                <label className='label-price' key={brand.id} htmlFor={brand.brand}  style={{ marginRight: '1rem', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <input
                                         type="radio"
                                         name="brand"
@@ -153,7 +153,7 @@ export default function PricePage() {
                                     {brand.brand} 
                                 </label>
                             ))}
-                            <label className='label-price' style={{ marginRight: '1rem', fontSize: '14px', display: 'flex', alignItems: 'center' }}>
+                            <label className='label-price' style={{ marginRight: '1rem', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <input
                                     type="radio"
                                     name="brand"

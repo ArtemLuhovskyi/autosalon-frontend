@@ -54,6 +54,7 @@ export default function TeamModal({ team, onClose, getAllTeam }: TeamModalProps)
     console.log('team submitted successfully:', result);
 
     getAllTeam();
+    alert('Операція пройшла успішно');
     onClose();
   };
 

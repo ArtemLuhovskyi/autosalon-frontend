@@ -45,6 +45,7 @@ export default function BrandModal({ brand, onClose, getAllBrand }: BrandModalPr
     console.log('Brand submitted successfully:', result);
   
     getAllBrand();
+    alert('Операція пройшла успішно');
     onClose();
   };
 

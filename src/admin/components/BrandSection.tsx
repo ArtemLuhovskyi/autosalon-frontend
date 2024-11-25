@@ -42,6 +42,7 @@ export default function BrandSection() {
 
         const result = await response.json();
         await getAllBrand();
+        alert('Операція пройшла успішно');
         return result;
     };
 

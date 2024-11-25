@@ -82,6 +82,7 @@ export default function CarModal({ car, onClose, getAllCars }: CarModalProps) {
         console.log('Car submitted successfully:', result);
 
         getAllCars();
+        alert('Операція пройшла успішно');
         onClose();
     };
 
